@@ -1,34 +1,51 @@
+import { useState } from 'react'
 import './App.css'
 
-const turns = {
+const TURN = {
   x: "x",
   o: "o"
 }
 
-const board = Array(9).fill(null);
 
-const Square = ({ children, updateBoard, index}) => {
+
+const Square = ({ children, updateBoard, index, isSelected}) => {
+  const handleClick = () =>{
+    updateBoard();
+  }
+
   return(
-    <div className='border border-solid border-white text-5xl text-center h-full flex justify-center items-center'>
+    <div onClick={handleClick} className={`${isSelected? "bg-blue-700": ""} border border-solid border-white rounded-lg text-5xl text-center h-full flex justify-center items-center cursor-pointer`}>
       {children}
     </div>
   )
 }
 
 function App() {
+  const [board, setBoard] = useState(Array(9).fill(null));
+  const [turn, setTurn] = useState(TURN.x);
+
+  const updateBoard = () => {
+    const newTurn = turn === TURN.x ? TURN.o : TURN.x;
+    setTurn(newTurn);
+  }
+
   return (
-    <>
-      <h1 className='text-3xl'>TIC-TAC-TOE</h1>
+    <main>
+      <h1 className='text-3xl mb-7'>TIC-TAC-TOE</h1>
       <section className='h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
         board.map((_, index) => {
           return (
-            <Square key={index} index={index}>
-              {index}
+            <Square key={index} index={index} updateBoard={updateBoard}>
+              {board[index]}
             </Square>
           )
         })
       }</section>
-    </>
+      <section className='flex justify-evenly mt-7 '>
+        <Square isSelected={turn === TURN.x}>{TURN.x}</Square>
+        <Square isSelected={turn === TURN.o}>{TURN.o}</Square>
+      </section>
+    </main>
   )
 }
 
