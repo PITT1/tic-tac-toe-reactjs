@@ -24,9 +24,13 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURN.x);
 
-  const updateBoard = () => {
+  const updateBoard = (index) => {
+    const newBoard = [...board];
+    newBoard[index] = turn;
     const newTurn = turn === TURN.x ? TURN.o : TURN.x;
+    setBoard(newBoard);
     setTurn(newTurn);
+    console.log(index)
   }
 
   return (
@@ -35,7 +39,7 @@ function App() {
       <section className='h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
         board.map((_, index) => {
           return (
-            <Square key={index} index={index} updateBoard={updateBoard}>
+            <Square key={index} index={index} updateBoard={() => updateBoard(index)}>
               {board[index]}
             </Square>
           )
