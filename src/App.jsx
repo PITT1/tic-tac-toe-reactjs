@@ -36,7 +36,7 @@ function App() {
   return (
     <main>
       <h1 className='text-3xl mb-7'>TIC-TAC-TOE</h1>
-      <section className='h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
+      <section className='h-64 sm:h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
         board.map((_, index) => {
           return (
             <Square key={index} index={index} updateBoard={() => updateBoard(index)}>
