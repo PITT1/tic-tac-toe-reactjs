@@ -58,13 +58,12 @@ function App() {
       const newWinner = checkWinner(newBoard);
       if(newWinner) {
         setWinner(newWinner);
-        alert("ganan las: " + newWinner);
       }
     }
   }
 
   return (
-    <main>
+    <main className='relative'>
       <h1 className='text-3xl mb-7'>TIC-TAC-TOE</h1>
       <section className='h-64 sm:h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
         board.map((_, index) => {
@@ -75,10 +74,25 @@ function App() {
           )
         })
       }</section>
+
       <section className='flex justify-evenly mt-7 '>
         <Square isSelected={turn === TURN.x}>{TURN.x}</Square>
         <Square isSelected={turn === TURN.o}>{TURN.o}</Square>
       </section>
+
+      {
+        winner !== null && (
+          <section className='absolute top-0 left-0 h-full w-full flex justify-center items-center'>
+            <div className='w-auto bg-slate-700 text-center rounded-2xl shadow-2xl'>
+              <h2 className='py-6 px-8 font-bold sm:text-2xl'>
+                {
+                  winner === false ? 'Empate':`Ganan las ${winner}`
+                }
+              </h2>
+            </div>
+          </section>
+        )
+      }
     </main>
   )
 }
