@@ -33,6 +33,8 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURN.x);
   const [winner, setWinner] = useState(null);
+  const [pointX, setPointX] = useState(0);
+  const [poinTO, setPointO] = useState(0);
 
   const checkWinner = (boardToCheck) => {
     for (const combo of winnerCombos) {
@@ -68,8 +70,17 @@ function App() {
     }
   }
 
+  const addPoints = () => {
+    if (winner == "x") {
+      setPointX(pointX + 1);
+    } else if (winner == "o") {
+      setPointO(poinTO + 1);
+    }
+  }
+
   const resetGame = () => {
     setBoard(Array(9).fill(null));
+    addPoints();
     setTurn(winner);
     setWinner(null);
   }
@@ -77,6 +88,12 @@ function App() {
   return (
     <main className='relative'>
       <h1 className='text-3xl mb-7'>TIC-TAC-TOE</h1>
+
+      <section className='w-full h-auto flex justify-around py-6 text-4xl'>
+        <div>x: {pointX}</div>
+        <div>o: {poinTO}</div>
+      </section>
+
       <section className='h-64 sm:h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
         board.map((_, index) => {
           return (
