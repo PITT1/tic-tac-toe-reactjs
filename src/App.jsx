@@ -62,6 +62,12 @@ function App() {
     }
   }
 
+  const handleModalBtn = () => {
+    setBoard(Array(9).fill(null));
+    setTurn(winner);
+    setWinner(null);
+  }
+
   return (
     <main className='relative'>
       <h1 className='text-3xl mb-7'>TIC-TAC-TOE</h1>
@@ -89,6 +95,9 @@ function App() {
                   winner === false ? 'Empate':`Ganan las ${winner}`
                 }
               </h2>
+              <div className='px-4'>
+                <button onClick={handleModalBtn} className='py-3 px-5 bg-slate-300 rounded-2xl text-slate-700 font-bold sm:text-2xl'>Siguiente ronda</button>
+              </div>
             </div>
           </section>
         )
