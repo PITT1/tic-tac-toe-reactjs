@@ -44,6 +44,10 @@ function App() {
     return null;
   }
 
+  const checkEndGame = (newBoard) => {
+    return newBoard.every(square => square !== null)
+  }
+
   const updateBoard = (index) => {
     if(board[index]) {
       return
@@ -58,11 +62,13 @@ function App() {
       const newWinner = checkWinner(newBoard);
       if(newWinner) {
         setWinner(newWinner);
+      } else if(checkEndGame(newBoard)) {
+        setWinner(false);
       }
     }
   }
 
-  const handleModalBtn = () => {
+  const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(winner);
     setWinner(null);
@@ -96,7 +102,7 @@ function App() {
                 }
               </h2>
               <div className='px-4'>
-                <button onClick={handleModalBtn} className='py-3 px-5 bg-slate-300 rounded-2xl text-slate-700 font-bold sm:text-2xl'>Siguiente ronda</button>
+                <button onClick={resetGame} className='py-3 px-5 bg-slate-300 rounded-2xl text-slate-700 font-bold sm:text-2xl'>Siguiente ronda</button>
               </div>
             </div>
           </section>
