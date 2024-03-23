@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from 'react';
 import confetti from 'canvas-confetti';
+import PropTypes from 'prop-types';
 import './App.css';
 
 const TURN = {
@@ -19,7 +20,7 @@ const winnerCombos = [
   [2, 4, 6]
 ]
 
-const Square = ({ children, updateBoard, index, isSelected}) => {
+const Square = ({ children, updateBoard, isSelected}) => {
   const handleClick = () =>{
     updateBoard();
   }
@@ -34,6 +35,12 @@ const Square = ({ children, updateBoard, index, isSelected}) => {
     </motion.div>
   )
 }
+
+Square.propTypes = {
+  children: PropTypes.node.isRequired,
+  updateBoard: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool.isRequired
+};
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
