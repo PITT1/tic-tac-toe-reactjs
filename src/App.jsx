@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import './App.css'
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import './App.css';
 
 const TURN = {
   x: "x",
@@ -23,9 +24,13 @@ const Square = ({ children, updateBoard, index, isSelected}) => {
   }
 
   return(
-    <div onClick={handleClick} className={`${isSelected? "bg-blue-700": ""} border border-solid border-white rounded-lg text-5xl text-center h-full flex justify-center items-center cursor-pointer`}>
+    <motion.div
+    initial={{scale: 0}}
+    animate={{scale: 1}} 
+    onClick={handleClick} 
+    className={`${isSelected? "bg-blue-700": ""} border border-solid border-white rounded-lg text-5xl text-center h-full flex justify-center items-center cursor-pointer`}>
       {children}
-    </div>
+    </motion.div>
   )
 }
 
@@ -59,7 +64,6 @@ function App() {
       const newTurn = turn === TURN.x ? TURN.o : TURN.x;
       setBoard(newBoard);
       setTurn(newTurn);
-      console.log(index)
 
       const newWinner = checkWinner(newBoard);
       if(newWinner) {
@@ -109,9 +113,15 @@ function App() {
         <Square isSelected={turn === TURN.o}>{TURN.o}</Square>
       </section>
 
+      <AnimatePresence>
       {
         winner !== null && (
-          <section className='absolute top-0 left-0 h-full w-full flex justify-center items-center'>
+          
+          <motion.section
+            key="modal"
+           initial={{opacity: 0}} 
+           animate={{opacity: 1}} 
+           exit={{scale: 0, opacity: 0}} className='absolute top-0 left-0 h-full w-full flex justify-center items-center'>
             <div className='w-auto bg-slate-700 text-center rounded-2xl shadow-2xl'>
               <h2 className='py-6 px-8 font-bold sm:text-2xl'>
                 {
@@ -122,9 +132,11 @@ function App() {
                 <button onClick={resetGame} className='py-3 px-5 bg-slate-300 rounded-2xl text-slate-700 font-bold sm:text-2xl'>Siguiente ronda</button>
               </div>
             </div>
-          </section>
+          </motion.section>
+          
         )
       }
+      </AnimatePresence>
     </main>
   )
 }
