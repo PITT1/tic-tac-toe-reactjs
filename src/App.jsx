@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from 'react';
+import confetti from 'canvas-confetti';
 import './App.css';
 
 const TURN = {
@@ -67,6 +68,7 @@ function App() {
 
       const newWinner = checkWinner(newBoard);
       if(newWinner) {
+        confetti();
         setWinner(newWinner);
       } else if(checkEndGame(newBoard)) {
         setWinner(false);
@@ -99,10 +101,10 @@ function App() {
       </section>
 
       <section className='h-64 sm:h-96 grid grid-cols-3 grid-rows-3 aspect-square justify-items-stretch items-stretch gap-1'>{
-        board.map((_, index) => {
+        board.map((board, index) => {
           return (
             <Square key={index} index={index} updateBoard={() => updateBoard(index)}>
-              {board[index]}
+              {board}
             </Square>
           )
         })
@@ -116,13 +118,13 @@ function App() {
       <AnimatePresence>
       {
         winner !== null && (
-          
           <motion.section
             key="modal"
-           initial={{opacity: 0}} 
-           animate={{opacity: 1}} 
-           exit={{scale: 0, opacity: 0}} className='absolute top-0 left-0 h-full w-full flex justify-center items-center'>
-            <div className='w-auto bg-slate-700 text-center rounded-2xl shadow-2xl'>
+           initial={{opacity: 0, y: -400}} 
+           animate={{opacity: 1, y: 0}} 
+           exit={{scale: 0, opacity: 0}}
+           className='absolute center-modal h-auto w-auto flex justify-center items-center'>
+            <div className='w-auto bg-slate-700 text-center rounded-2xl shadow-2xl border border-solid border-white'>
               <h2 className='py-6 px-8 font-bold sm:text-2xl'>
                 {
                   winner === false ? 'Empate':`Ganan las ${winner}`
@@ -132,8 +134,7 @@ function App() {
                 <button onClick={resetGame} className='py-3 px-5 bg-slate-300 rounded-2xl text-slate-700 font-bold sm:text-2xl'>Siguiente ronda</button>
               </div>
             </div>
-          </motion.section>
-          
+          </motion.section> 
         )
       }
       </AnimatePresence>

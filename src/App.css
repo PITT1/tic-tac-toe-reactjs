@@ -3,3 +3,15 @@
   margin: 0 auto;
   text-align: center;
 }
+
+.center-modal {
+  top: 50%;
+  left: 12%;
+}
+
+@media screen and (min-width: 640px) {
+  .center-modal {
+    left: 17%;
+  }
+  
+}
